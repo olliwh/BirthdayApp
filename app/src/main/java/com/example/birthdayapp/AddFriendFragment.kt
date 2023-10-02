@@ -30,6 +30,7 @@ class AddFriendFragment : Fragment() {
     private val friendsViewModel: FriendsViewModel by activityViewModels()
     private var month: Int = 1
     private var day: Int = 1
+    private var two: Int = 1
 
 
     override fun onCreateView(
