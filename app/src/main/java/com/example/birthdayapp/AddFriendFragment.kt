@@ -15,6 +15,7 @@ import com.example.birthdayapp.databinding.FragmentAddFriendBinding
 import com.example.birthdayapp.models.Friend
 import com.example.birthdayapp.models.FriendsViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 import java.time.LocalDate.*
 import java.util.Calendar
@@ -24,13 +25,13 @@ import java.util.TimeZone
 
 class AddFriendFragment : Fragment() {
     private var _binding: FragmentAddFriendBinding? = null
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private val binding get() = _binding!!
 
     private val friendsViewModel: FriendsViewModel by activityViewModels()
     private var month: Int = 1
     private var day: Int = 1
-    private var two: Int = 1
 
 
     override fun onCreateView(
@@ -71,6 +72,9 @@ class AddFriendFragment : Fragment() {
         getSpinnerValues(spinnerMonth)
         val spinnerDay: Spinner = binding.spinnerDay
         getSpinnerValues(spinnerDay)
+        val user = auth.currentUser
+
+
         binding.buttonAdd.setOnClickListener {
             val name = binding.editTextName.text.trim().toString()
             val year = binding.editTextYear.text.trim().toString().toInt()
@@ -93,7 +97,7 @@ class AddFriendFragment : Fragment() {
                 return@setOnClickListener
             }
             else {
-                val newFriend = Friend("anbo@zealand.dk", name, year, month, day)
+                val newFriend = Friend(user?.email.toString(), name, year, month, day)
                 friendsViewModel.add(newFriend)
                 findNavController().popBackStack()
             }

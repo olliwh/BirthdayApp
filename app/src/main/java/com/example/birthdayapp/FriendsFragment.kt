@@ -14,8 +14,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import com.example.birthdayapp.databinding.FragmentFriendsBinding
+import com.example.birthdayapp.models.Friend
 import com.example.birthdayapp.models.FriendsViewModel
 import com.example.birthdayapp.models.MyAdapter
+import com.google.firebase.auth.FirebaseAuth
 
 
 class FriendsFragment : Fragment() {
@@ -27,6 +29,9 @@ class FriendsFragment : Fragment() {
     private val friendsViewModel : FriendsViewModel by activityViewModels()
 
     private val binding get() = _binding!!
+
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,13 +46,16 @@ class FriendsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         friendsViewModel.friendsLiveData.observe(viewLifecycleOwner) {friends ->
             binding.recyclerView.visibility = if (friends == null) View.GONE else View.VISIBLE
+
+            binding.textView.text = auth.currentUser?.email
             if (friends != null) {
-                val adapter = MyAdapter(friends) { friendId ->
+
+
+                val adapter = MyAdapter(friends) { position ->
                     val action =
-                    FriendsFragmentDirections.actionFriendsFragmentToSingleFriendFragment(friendId)
+                    FriendsFragmentDirections.actionFriendsFragmentToSingleFriendFragment(position)
                     findNavController().navigate(action)
                     //findNavController().navigate(R.id.action_friendsFragment_to_singleFriendFragment)
                 }
@@ -55,9 +63,6 @@ class FriendsFragment : Fragment() {
 
                 binding.recyclerView.adapter = adapter
 
-                binding.buttonAdd.setOnClickListener {
-                    findNavController().navigate(R.id.action_friendsFragment_to_addFriendFragment)
-                }
 
                 val spinner: Spinner = binding.spinnerSorting
                 spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -86,6 +91,13 @@ class FriendsFragment : Fragment() {
                     friendsViewModel.filter(name)
                 }
 
+            }
+            binding.buttonAdd.setOnClickListener {
+                findNavController().navigate(R.id.action_friendsFragment_to_addFriendFragment)
+            }
+            binding.buttonLogout.setOnClickListener {
+                auth.signOut()
+                findNavController().popBackStack()
             }
         }
         friendsViewModel.reload()

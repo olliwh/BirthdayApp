@@ -16,9 +16,11 @@ import java.time.Period
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 
 class SingleFriendFragment : Fragment() {
     private var _binding: FragmentSingleFriendBinding? = null
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private val binding get() = _binding!!
 
@@ -60,13 +62,13 @@ class SingleFriendFragment : Fragment() {
 
 
         binding.buttonUpdate.setOnClickListener {
+            val user = auth.currentUser
             val name = binding.editTextName.text.toString().trim()
-
             val day = binding.editTextDay.text.toString().trim().toInt()
             val month = binding.editTextMonth.text.toString().trim().toInt()
             val year = binding.editTextYear.text.toString().trim().toInt()
             val age = 1
-            val updatedFriend = Friend(friend.id, "anbo@zealand.dk", name, year, month, day, age)
+            val updatedFriend = Friend(friend.id, user?.email.toString(), name, year, month, day, age)
             friendsViewModel.update(updatedFriend)
             findNavController().popBackStack()
         }

@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "783134484457",
+    "project_id": "firstfirebase-36417",
+    "storage_bucket": "firstfirebase-36417.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783134484457:android:356aa549a5d1d7f5e1cd78",
+        "android_client_info": {
+          "package_name": "com.example.birthdayapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3DMBRzynUAIzxJtSP5_vIMudRmOMw1YM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783134484457:android:f080e397ab05f072e1cd78",
+        "android_client_info": {
+          "package_name": "com.example.login"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3DMBRzynUAIzxJtSP5_vIMudRmOMw1YM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783134484457:android:f1950fd594ddd4a2e1cd78",
+        "android_client_info": {
+          "package_name": "dfghjk7_.wdwe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3DMBRzynUAIzxJtSP5_vIMudRmOMw1YM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
