@@ -31,6 +31,7 @@ class FriendsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private var userId: String? = auth.currentUser?.email
 
 
     override fun onCreateView(
@@ -100,7 +101,7 @@ class FriendsFragment : Fragment() {
                 findNavController().popBackStack()
             }
         }
-        friendsViewModel.reload()
+        friendsViewModel.reload(userId)
 
     }
     override fun onDestroyView() {

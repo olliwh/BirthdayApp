@@ -12,12 +12,12 @@ class FriendsViewModel : ViewModel() {
     val updateMessageLiveData: LiveData<String> = repository.updateMessageLiveData
 
     init {
-        reload()
+        //reload()
 
     }
 
-    fun reload() {
-        repository.getFriends()
+    fun reload(userId: String?) {
+        repository.getFriends(userId)
     }
 
     operator fun get(index: Int): Friend? {

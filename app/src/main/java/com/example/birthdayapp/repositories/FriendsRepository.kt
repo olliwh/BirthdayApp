@@ -35,7 +35,7 @@ class FriendsRepository {
             //.addConverterFactory(MoshiConverterFactory.create(moshi)) // Moshi, added to Gradle dependencies
             .build()
         friendService = build.create(FriendService::class.java)
-        getFriends()
+        //getFriends()
     }
 
     fun onFailureMessage(t: Throwable){
@@ -65,13 +65,23 @@ class FriendsRepository {
         }
     }
 
-    fun getFriends() {
+    fun getFriends(userId: String?) {
         friendService.getAllFriends().enqueue(object : Callback<List<Friend>> {
             override fun onResponse(call: Call<List<Friend>>, response: Response<List<Friend>>) {
                 if (response.isSuccessful) {
                     Log.d("APPLE", response.body().toString() + "repo")
                     val b: List<Friend>? = response.body()
-                    friendsLiveData.postValue(b!!)
+                    val userfriends: MutableList<Friend> = mutableListOf()
+                    if (b != null) {
+                        for(friend in b) {
+                            if(friend.userId == userId) {
+                                Log.d("APPLE", userId.toString())
+                                userfriends.add(friend)
+
+                            }
+                        }
+                    }
+                    friendsLiveData.postValue(userfriends)
                     errorMessageLiveData.postValue("")
                 } else {
                     listResponceFail(response)
