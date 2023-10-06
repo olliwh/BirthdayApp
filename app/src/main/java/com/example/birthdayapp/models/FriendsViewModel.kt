@@ -50,13 +50,13 @@ class FriendsViewModel : ViewModel() {
 
     fun sortByAgeDescending() {
         repository.sortByAgeDescending()
-    }/*
+    }
     fun sortByBirth() {
         repository.sortByBirth()
     }
     fun sortByBirthDescending() {
         repository.sortByBirthDescending()
-    }*/
+    }
 
     fun filter(condition: String) {
         repository.filter(condition)

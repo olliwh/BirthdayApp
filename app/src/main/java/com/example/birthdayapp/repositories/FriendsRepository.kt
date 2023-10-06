@@ -64,7 +64,24 @@ class FriendsRepository {
             Log.d("APPLE", message)
         }
     }
+    fun getUserFriends(userId: String?){
+        friendService.getUserFriends(userId).enqueue(object : Callback<List<Friend>>{
+            override fun onResponse(call: Call<List<Friend>>, response: Response<List<Friend>>) {
+                if (response.isSuccessful) {
+                    Log.d("APPLE", response.body().toString() + "repo")
+                    val b: List<Friend>? = response.body()
+                    friendsLiveData.postValue(b!!)
+                    errorMessageLiveData.postValue("")
+                } else {
+                    listResponceFail(response)
+                }
+            }
 
+            override fun onFailure(call: Call<List<Friend>>, t: Throwable) {
+                onFailureMessage(t)
+            }
+        })
+    }
     fun getFriends(userId: String?) {
         friendService.getAllFriends().enqueue(object : Callback<List<Friend>> {
             override fun onResponse(call: Call<List<Friend>>, response: Response<List<Friend>>) {
@@ -145,15 +162,18 @@ class FriendsRepository {
     fun sortByAgeDescending() {
         friendsLiveData.value = friendsLiveData.value?.sortedByDescending { it.age }
     }
-    /*
+
     fun sortByBirth() {
-        val year = friendsLiveData.value?.sortedBy { it.birthDay }
+        friendsLiveData.value?.sortedBy { it.birthMonth  }
     }
+
     fun sortByBirthDescending() {
-        val year = friendsLiveData.value?.sortedByDescending { it.birthDay }
+        val year = friendsLiveData.value?.sortedByDescending {
+            it.birthMonth
+        }
         Log.d("APPLE", "BDay")
 
-    }*/
+    }
 
     fun filter(condition: String){
         friendService.getAllFriends().enqueue(object : Callback<List<Friend>> {
