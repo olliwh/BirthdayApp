@@ -17,6 +17,7 @@ class FriendsViewModel : ViewModel() {
     }
 
     fun reload(userId: String?) {
+        Log.d("APPLE", "viewmodel userId: " + userId)
         repository.getFriends(userId)
     }
 

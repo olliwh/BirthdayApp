@@ -65,6 +65,8 @@ class FriendsRepository {
         }
     }
     fun getUserFriends(userId: String?){
+        Log.d("APPLE", userId.toString())
+
         friendService.getUserFriends(userId).enqueue(object : Callback<List<Friend>>{
             override fun onResponse(call: Call<List<Friend>>, response: Response<List<Friend>>) {
                 if (response.isSuccessful) {
