@@ -39,4 +39,9 @@
         android:name="com.example.birthdayapp.AddFriendFragment"
         android:label="fragment_add_friend"
         tools:layout="@layout/fragment_add_friend" />
+    <activity
+        android:id="@+id/mainActivity3"
+        android:name="com.example.birthdayapp.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>

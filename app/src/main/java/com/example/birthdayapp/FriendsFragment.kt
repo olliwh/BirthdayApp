@@ -48,6 +48,8 @@ class FriendsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         friendsViewModel.friendsLiveData.observe(viewLifecycleOwner) {friends ->
+            binding.progressbar.visibility = View.GONE
+
             binding.recyclerView.visibility = if (friends == null) View.GONE else View.VISIBLE
 
             binding.textView.text = auth.currentUser?.email
@@ -99,10 +101,7 @@ class FriendsFragment : Fragment() {
             binding.buttonAdd.setOnClickListener {
                 findNavController().navigate(R.id.action_friendsFragment_to_addFriendFragment)
             }
-            binding.buttonLogout.setOnClickListener {
-                auth.signOut()
-                findNavController().popBackStack()
-            }
+
         }
         friendsViewModel.reload(userId)
 

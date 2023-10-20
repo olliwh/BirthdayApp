@@ -8,12 +8,24 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.findNavController
+
 import com.example.birthdayapp.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.android.material.snackbar.Snackbar
+import androidx.navigation.findNavController
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+
     
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +54,18 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> true
+            R.id.action_signout -> {
+                if (Firebase.auth.currentUser != null) {
+                    Firebase.auth.signOut()
+                    Snackbar.make(binding.root, "Signed out", Snackbar.LENGTH_LONG).show()
+                    val navController = findNavController(R.id.nav_host_fragment_content_main)
+                    navController.popBackStack(R.id.loginFragment, false)
+                    // https://developer.android.com/codelabs/android-navigation#6
+                } else {
+                    Snackbar.make(binding.root, "Cannot sign out", Snackbar.LENGTH_LONG).show()
+                }
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
