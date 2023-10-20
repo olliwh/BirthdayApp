@@ -166,14 +166,13 @@ class FriendsRepository {
     }
 
     fun sortByBirth() {
-        friendsLiveData.value?.sortedBy { it.birthMonth  }
+
+        friendsLiveData.value = friendsLiveData.value?.sortedWith(compareBy({it.birthDayOfMonth}, { it.birthMonth }))
     }
 
     fun sortByBirthDescending() {
-        val year = friendsLiveData.value?.sortedByDescending {
-            it.birthMonth
-        }
-        Log.d("APPLE", "BDay")
+        friendsLiveData.value = friendsLiveData.value?.sortedWith(compareBy({-it.birthDayOfMonth}, { -it.birthMonth }))
+
 
     }
 

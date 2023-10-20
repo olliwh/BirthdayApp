@@ -79,6 +79,9 @@ class FriendsFragment : Fragment() {
                         if(position == 2){friendsViewModel.sortByNameDescending()}
                         if(position == 3){friendsViewModel.sortByAge()}
                         if(position == 4){friendsViewModel.sortByAgeDescending()}
+                        if(position == 5){friendsViewModel.sortByBirth()}
+                        if(position == 6){friendsViewModel.sortByBirthDescending()}
+
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
