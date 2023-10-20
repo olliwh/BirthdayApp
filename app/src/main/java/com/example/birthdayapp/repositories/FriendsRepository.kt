@@ -9,6 +9,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import kotlin.reflect.typeOf
 
@@ -166,13 +168,17 @@ class FriendsRepository {
     }
 
     fun sortByBirth() {
-
-        friendsLiveData.value = friendsLiveData.value?.sortedWith(compareBy({it.birthDayOfMonth}, { it.birthMonth }))
+        val sdf = SimpleDateFormat("dd-MM")
+        friendsLiveData.value = friendsLiveData.value?.sortedBy {
+            sdf.parse("${it.birthDayOfMonth.toString()}-${it.birthMonth.toString()}")
+        }
     }
 
     fun sortByBirthDescending() {
-        friendsLiveData.value = friendsLiveData.value?.sortedWith(compareBy({-it.birthDayOfMonth}, { -it.birthMonth }))
-
+        val sdf = SimpleDateFormat("dd-MM")
+        friendsLiveData.value = friendsLiveData.value?.sortedByDescending {
+            sdf.parse("${it.birthDayOfMonth.toString()}-${it.birthMonth.toString()}")
+        }
 
     }
 
