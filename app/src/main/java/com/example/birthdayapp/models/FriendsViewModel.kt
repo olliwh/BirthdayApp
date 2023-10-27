@@ -59,7 +59,7 @@ class FriendsViewModel : ViewModel() {
         repository.sortByBirthDescending()
     }
 
-    fun filter(condition: String) {
-        repository.filter(condition)
+    fun filter(condition: String, userId: String?) {
+        repository.filter(condition, userId)
     }
 }

@@ -94,7 +94,7 @@ class FriendsFragment : Fragment() {
 
                 binding.buttonFilter.setOnClickListener {
                     val name = binding.edittextFilterName.text.toString().trim()
-                    friendsViewModel.filter(name)
+                    friendsViewModel.filter(name, userId)
                 }
 
             }

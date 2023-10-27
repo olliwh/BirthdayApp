@@ -25,9 +25,6 @@ class FriendsRepository {
     val errorMessageLiveData: MutableLiveData<String> = MutableLiveData()
     val updateMessageLiveData: MutableLiveData<String> = MutableLiveData()
 
-
-
-
     init {
         //val moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
         val build: Retrofit = Retrofit.Builder()
@@ -45,11 +42,6 @@ class FriendsRepository {
         Log.d("APPLE","my method. " + t.message!!)
     }
 
-    fun responceFail(response: Response<Friend>){
-        val message = response.code().toString() + " " + response.message()
-        errorMessageLiveData.postValue(message)
-        Log.d("APPLE", message)
-    }
     fun listResponceFail(response: Response<List<Friend>>){
         val message = response.code().toString() + " " + response.message()
         errorMessageLiveData.postValue(message)
@@ -66,13 +58,12 @@ class FriendsRepository {
             Log.d("APPLE", message)
         }
     }
-    fun getUserFriends(userId: String?){
-        Log.d("APPLE", userId.toString())
-
-        friendService.getUserFriends(userId).enqueue(object : Callback<List<Friend>>{
+    fun getFriends(user_id: String?){
+        friendService.getUserFriends(user_id).enqueue(object : Callback<List<Friend>>{
             override fun onResponse(call: Call<List<Friend>>, response: Response<List<Friend>>) {
                 if (response.isSuccessful) {
-                    Log.d("APPLE", response.body().toString() + "repo")
+                    Log.d("APPLE", friendService.getUserFriends(user_id).toString() )
+                    Log.d("APPLE",user_id +"rdszxdfgho")
                     val b: List<Friend>? = response.body()
                     friendsLiveData.postValue(b!!)
                     errorMessageLiveData.postValue("")
@@ -86,7 +77,7 @@ class FriendsRepository {
             }
         })
     }
-    fun getFriends(userId: String?) {
+    fun getFriends2(userId: String?) {
         friendService.getAllFriends().enqueue(object : Callback<List<Friend>> {
             override fun onResponse(call: Call<List<Friend>>, response: Response<List<Friend>>) {
                 if (response.isSuccessful) {
@@ -182,8 +173,8 @@ class FriendsRepository {
 
     }
 
-    fun filter(condition: String){
-        friendService.getAllFriends().enqueue(object : Callback<List<Friend>> {
+    fun filter(condition: String, friendId: String?){
+        friendService.getUserFriends(friendId).enqueue(object : Callback<List<Friend>> {
             override fun onResponse(call: Call<List<Friend>>, response: Response<List<Friend>>) {
                 if (response.isSuccessful) {
                     val b: List<Friend>? = response.body()

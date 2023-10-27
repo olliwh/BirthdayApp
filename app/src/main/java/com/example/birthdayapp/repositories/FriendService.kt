@@ -10,7 +10,7 @@ interface FriendService {
     @GET("persons")
     fun getAllFriends(): Call<List<Friend>>
     @GET("persons")
-    fun getUserFriends(@Query("userId") userId : String?): Call<List<Friend>>
+    fun getUserFriends(@Query("user_id") userId : String?): Call<List<Friend>>
     @GET("persons/{friendId}")
     fun getFriendById(@Path("friendId") friendId: Int): Call<Friend>
 

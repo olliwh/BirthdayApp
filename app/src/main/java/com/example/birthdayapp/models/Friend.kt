@@ -19,6 +19,6 @@ data class Friend(
             : this(-1, userId, name, birthYear, birthMonth, birthDayOfMonth, 1)
 
     override fun toString(): String {
-        return "$id, $name, $birthDayOfMonth/$birthMonth-$birthYear, $age"
+        return "$name, $birthDayOfMonth/$birthMonth-$birthYear, $age"
     }
 }
