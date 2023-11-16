@@ -16,6 +16,7 @@ import java.time.Period
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
 class SingleFriendFragment : Fragment() {
@@ -59,7 +60,10 @@ class SingleFriendFragment : Fragment() {
             friendsViewModel.delete(friend.id)
             findNavController().popBackStack()
         }
-
+        fun getSnackBar(view: View) {
+            Snackbar.make(view, "Date not valid", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
 
         binding.buttonUpdate.setOnClickListener {
             val user = auth.currentUser
@@ -67,6 +71,22 @@ class SingleFriendFragment : Fragment() {
             val day = binding.editTextDay.text.toString().trim().toInt()
             val month = binding.editTextMonth.text.toString().trim().toInt()
             val year = binding.editTextYear.text.toString().trim().toInt()
+            if(month > 12) {
+                getSnackBar(view)
+                return@setOnClickListener
+            }else if(day > 31) {
+                getSnackBar(view)
+                return@setOnClickListener
+            }else if(year % 4 == 0 && month == 2 && day > 29){
+                getSnackBar(view)
+                return@setOnClickListener
+            }else if(year % 4 != 0 &&month == 2 && day > 28) {
+                getSnackBar(view)
+                return@setOnClickListener
+            }else if((month == 4 || month == 6 || month == 9 || month ==11)&& day>30) {
+                getSnackBar(view)
+                return@setOnClickListener
+            }
             val age = 1
             val updatedFriend = Friend(friend.id, user?.email.toString(), name, year, month, day, age)
             friendsViewModel.update(updatedFriend)
